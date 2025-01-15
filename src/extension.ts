@@ -1,10 +1,15 @@
 import { workspace } from 'vscode';
 import { updateNamespaceFiles } from './feature/update-namespace-files';
+import { isPhpProject } from './utils/file-helpers';
 
 export function activate() {
   const workspaceRoot = workspace.workspaceFolders
     ? workspace.workspaceFolders[0].uri.fsPath
     : '';
+
+  if (!isPhpProject(workspaceRoot)) {
+    return;
+  }
 
   workspace.onDidRenameFiles((event) => {
     event.files.forEach(async (file) => {
