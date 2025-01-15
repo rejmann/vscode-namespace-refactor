@@ -16,8 +16,7 @@ export function activate() {
       const oldUri = file.oldUri;
       const newUri = file.newUri;
 
-      if (!oldUri.fsPath.endsWith('.php')
-        && !newUri.fsPath.endsWith('.php')) {
+      if (!oldUri.fsPath.endsWith('.php') && !newUri.fsPath.endsWith('.php')) {
         return;
       }
 
