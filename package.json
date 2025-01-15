@@ -3,6 +3,30 @@
   "displayName": "PHP Namespace Refactor",
   "description": "PHP Namespace Refactor: Extension for Visual Studio Code that automatically refactors namespace and references when moving PHP files between directories.",
   "version": "0.0.2",
+  "author": {
+    "name": "rejman",
+    "url": "https://github.com/rejmann"
+  },
+  "repository": {
+    "url": "https://github.com/rejmann/php-namespace-refactor"
+  },
+  "publisher": "rejman",
+  "keywords": [
+    "autoload",
+    "automated refactor",
+    "code refactor",
+    "composer",
+    "composer autoload",
+    "composer autoload refactor",
+    "namespace management",
+    "namespace refactor",
+    "namespace refactoring",
+    "php",
+    "php namespaces",
+    "php project",
+    "php refactor",
+    "project refactor"
+  ],
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -27,7 +51,10 @@
     "check-types": "tsc --noEmit",
     "lint": "eslint src",
     "test": "vscode-test",
-    "release": "standard-version"
+    "release": "standard-version",
+    "pack": "vsce package",
+    "publish": "vsce package && vsce publish",
+    "publish:pre-release": "vsce package --pre-release && vsce publish --pre-release"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
