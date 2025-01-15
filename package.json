@@ -1,6 +1,6 @@
 {
   "name": "php-namespace-refactor",
-  "displayName": "php-namespace-refactor",
+  "displayName": "PHP Namespace Refactor",
   "description": "PHP Namespace Refactor: Extension for Visual Studio Code that automatically refactors namespace and references when moving PHP files between directories.",
   "version": "0.0.2",
   "engines": {
