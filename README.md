@@ -26,4 +26,10 @@ This extension contributes the following settings:
 
 `to bem implemented`
 
+## Release notes
+
+See [./CHANGELOG.md](./CHANGELOG.md)
+
+---
+
 By PHP Developer for PHP Developers 🐘
