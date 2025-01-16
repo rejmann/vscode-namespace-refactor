@@ -1,6 +1,7 @@
 import { workspace } from 'vscode';
 import { updateNamespaceFiles } from './feature/update-files';
 import { isPhpProject } from './utils/file-helpers';
+import { autoImportNamespace } from './feature/auto-import';
 
 export function activate() {
   const workspaceRoot = workspace.workspaceFolders
@@ -24,6 +25,12 @@ export function activate() {
         workspaceRoot,
         newUri,
         oldUri,
+      });
+
+      await autoImportNamespace({
+        workspaceRoot,
+        oldFileName: oldUri.fsPath,
+        newUri,
       });
     });
   });
