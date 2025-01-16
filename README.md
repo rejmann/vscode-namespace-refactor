@@ -24,7 +24,17 @@ Ideal for projects using PSR-4, making it easy to reorganize directories without
 
 This extension contributes the following settings:
 
-`to be implemented`
+```json
+{
+    "phpNamespaceRefactor.ignoredDirectories": [
+        "/vendor/",
+        "/var/",
+        "/cache/"
+    ],
+    "phpNamespaceRefactor.autoImportNamespace": true,
+    "phpNamespaceRefactor.removeUnusedImports": true
+}
+```
 
 ## Release notes
 
