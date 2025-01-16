@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/rejmann/php-namespace-refactor/compare/v0.0.3...v0.0.4) (2025-01-16)
+
+
+### Features
+
+* auto import classes from current object when changing its directory ([442cc7d](https://github.com/rejmann/php-namespace-refactor/commit/442cc7d910fec706dfc589ab0569fa6ed0f0e643))
+* remove unused imports ([69e18ea](https://github.com/rejmann/php-namespace-refactor/commit/69e18ea03fd7c5bbd95e3406de109036ea8b45ff))
+
 ### 0.0.3 (2025-01-16)
 
 
