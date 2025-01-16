@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/rejmann/php-namespace-refactor/compare/v0.0.4...v0.0.5) (2025-01-16)
+
+
+### Features
+
+* allow disable/enable features ([efd1214](https://github.com/rejmann/php-namespace-refactor/commit/efd12149b3c7263bb8bbee1c7feb4ec374d7386d))
+
 ### [0.0.4](https://github.com/rejmann/php-namespace-refactor/compare/v0.0.3...v0.0.4) (2025-01-16)
 
 
