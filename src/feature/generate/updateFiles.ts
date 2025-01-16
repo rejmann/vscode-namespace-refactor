@@ -1,6 +1,6 @@
 import { Range, TextDocument, Uri, workspace, WorkspaceEdit } from 'vscode';
-import { generateNamespace } from './generate';
-import { REGEX_NAMESPACE_FILE } from './constants';
+import { generateNamespace } from '../generate';
+import { REGEX_NAMESPACE_FILE } from '../constants';
 
 interface Props {
   newUri: Uri,

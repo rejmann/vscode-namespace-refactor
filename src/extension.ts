@@ -1,7 +1,7 @@
 import { autoImportNamespace } from './feature/autoImport';
 import { isPhpProject } from './utils/fileHelpers';
 import { removeUnusedImports } from './feature/removeUnusedImports';
-import { updateNamespaceFiles } from './feature/updateFiles';
+import { updateNamespaceFiles } from './feature/generate/updateFiles';
 import { workspace } from 'vscode';
 
 export function activate() {
