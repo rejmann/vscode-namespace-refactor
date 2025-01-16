@@ -3,13 +3,11 @@ import { REGEX_NAMESPACE_FILE } from './constants';
 import { generateNamespace } from './generate';
 
 interface Props {
-  workspaceRoot: string,
   newUri: Uri,
   oldUri: Uri,
 }
 
 export async function updateNamespaceFiles({
-  workspaceRoot,
   newUri,
   oldUri,
 }: Props) {
@@ -17,7 +15,6 @@ export async function updateNamespaceFiles({
     namespace: newNamespace,
     fullNamespace: useNewNamespace,
   } = generateNamespace({
-    workspaceRoot,
     uri: newUri.fsPath,
   });
 
@@ -29,7 +26,6 @@ export async function updateNamespaceFiles({
     namespace: oldNamespace,
     fullNamespace: useOldNamespace,
   } = generateNamespace({
-    workspaceRoot,
     uri: oldUri.fsPath,
   });
 

@@ -23,13 +23,11 @@ export function activate() {
       }
 
       await updateNamespaceFiles({
-        workspaceRoot,
         newUri,
         oldUri,
       });
 
       await autoImportNamespace({
-        workspaceRoot,
         oldFileName: oldUri.fsPath,
         newUri,
       });

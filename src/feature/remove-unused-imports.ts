@@ -1,4 +1,3 @@
-import { WORKSPACE_ROOT } from './constants';
 import * as path from 'path';
 import { generateNamespace } from './generate';
 import { TextDocument, Uri, workspace, RelativePattern, WorkspaceEdit, Range } from 'vscode';
@@ -11,7 +10,6 @@ export async function removeUnusedImports({
   newUri,
 }: Props) {
   const { className } = generateNamespace({
-    workspaceRoot: WORKSPACE_ROOT,
     uri: newUri.fsPath,
   });
 
