@@ -1,22 +1,20 @@
 import * as fs from 'fs';
 import { basename } from 'path';
-import { COMPOSER_FILE } from './constants';
+import { COMPOSER_FILE, WORKSPACE_ROOT } from './constants';
 
 type AutoloadType = {
   [key: string]: string
 }
 
 interface Props {
-  workspaceRoot: string
   uri: string
 }
 
 export function generateNamespace({
-  workspaceRoot,
   uri,
 }: Props) {
   const { autoload, autoloadDev } = getSrcAutoload({
-    workspaceRoot,
+    workspaceRoot: WORKSPACE_ROOT,
     uri
   });
 

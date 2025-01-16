@@ -4,13 +4,11 @@ import { TextDocument, workspace, WorkspaceEdit, Range, Uri } from 'vscode';
 import { generateNamespace } from './generate';
 
 interface Props {
-  workspaceRoot: string
   oldFileName: string
   newUri: Uri
 }
 
 export async function autoImportNamespace({
-  workspaceRoot,
   oldFileName,
   newUri,
 }: Props) {
@@ -25,7 +23,6 @@ export async function autoImportNamespace({
   const text = document.getText();
 
   const imports = generateImports({
-    workspaceRoot,
     classesUsed: getClassesUsed(text, classes),
     directoryPath,
   });
@@ -88,18 +85,15 @@ function extractClassesExistingImports(text: string): string[] {
 }
 
 function generateImports({
-  workspaceRoot,
   classesUsed,
   directoryPath,
 }: {
-  workspaceRoot: string,
   classesUsed: string[],
   directoryPath: string
 }): string {
   return classesUsed
     .map((className) => {
       const { fullNamespace } = generateNamespace({
-        workspaceRoot,
         uri: directoryPath + '/' + className + '.php',
       });
 
