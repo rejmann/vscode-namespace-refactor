@@ -1,33 +1,14 @@
-import * as path from 'path';
-import { generateNamespace } from './generate';
-import { TextDocument, Uri, workspace, RelativePattern, WorkspaceEdit, Range } from 'vscode';
+import { Range, TextDocument, workspace, WorkspaceEdit } from 'vscode';
 
 interface Props {
-  newUri: Uri
+  document: TextDocument
+  fileNames: string[]
 }
 
-export async function removeUnusedImports({
-  newUri,
+export async function removeImports({
+  document,
+  fileNames,
 }: Props) {
-  const { className } = generateNamespace({
-    uri: newUri.fsPath,
-  });
-
-  const directoryPath = path.dirname(newUri.fsPath);
-
-  const phpFiles: Uri[] = await workspace.findFiles(
-    new RelativePattern(Uri.parse(`file://${directoryPath}`), '*.php')
-  );
-
-  const fileNames = phpFiles.map(uri => path.basename(uri.fsPath, '.php'))
-    .filter(Boolean)
-    .filter(name => name !== className);
-
-  if (!fileNames.length) {
-    return;
-  }
-
-  const document: TextDocument = await workspace.openTextDocument(newUri.fsPath);
   const text = document.getText();
 
   const edit = new WorkspaceEdit();

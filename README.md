@@ -24,7 +24,7 @@ Ideal for projects using PSR-4, making it easy to reorganize directories without
 
 This extension contributes the following settings:
 
-`to bem implemented`
+`to be implemented`
 
 ## Release notes
 
