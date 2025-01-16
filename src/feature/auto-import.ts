@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { TextDocument, workspace, WorkspaceEdit, Range, Uri } from 'vscode';
+import { Range, TextDocument, Uri, workspace, WorkspaceEdit } from 'vscode';
 import { generateNamespace } from './generate';
 
 interface Props {

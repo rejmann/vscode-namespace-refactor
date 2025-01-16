@@ -1,8 +1,8 @@
-import { workspace } from 'vscode';
-import { updateNamespaceFiles } from './feature/update-files';
-import { isPhpProject } from './utils/file-helpers';
 import { autoImportNamespace } from './feature/auto-import';
+import { isPhpProject } from './utils/file-helpers';
 import { removeUnusedImports } from './feature/remove-unused-imports';
+import { updateNamespaceFiles } from './feature/update-files';
+import { workspace } from 'vscode';
 
 export function activate() {
   const workspaceRoot = workspace.workspaceFolders

@@ -1,6 +1,6 @@
 import * as fs from 'fs';
-import { basename } from 'path';
 import { COMPOSER_FILE, WORKSPACE_ROOT } from './constants';
+import { basename } from 'path';
 
 type AutoloadType = {
   [key: string]: string

@@ -58,6 +58,7 @@
     "publish:pre-release": "vsce package --pre-release && vsce publish --pre-release"
   },
   "devDependencies": {
+    "@rocketseat/eslint-config": "^2.2.2",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
     "@types/vscode": "^1.96.0",

@@ -1,6 +1,6 @@
 import * as path from 'path';
+import { Range, RelativePattern, TextDocument, Uri, workspace, WorkspaceEdit } from 'vscode';
 import { generateNamespace } from './generate';
-import { TextDocument, Uri, workspace, RelativePattern, WorkspaceEdit, Range } from 'vscode';
 
 interface Props {
   newUri: Uri
