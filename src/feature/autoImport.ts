@@ -1,7 +1,8 @@
-import * as fs from 'fs';
 import * as path from 'path';
 import { Range, TextDocument, Uri, workspace, WorkspaceEdit } from 'vscode';
 import { generateNamespace } from './generate';
+import { getClassesInDirectory } from './autoImport/getClassInDirectory';
+import { getClassesUsed } from './autoImport/getClassesUsed';
 
 interface Props {
   oldFileName: string
@@ -13,7 +14,9 @@ export async function autoImportNamespace({
   newUri,
 }: Props) {
   const directoryPath = path.dirname(oldFileName);
-  const classes: string[] = getClassesInDirectory(directoryPath);
+  const classes: string[] = getClassesInDirectory({
+    directory: directoryPath,
+  });
 
   if (classes.length < 1) {
     return;
@@ -23,7 +26,10 @@ export async function autoImportNamespace({
   const text = document.getText();
 
   const imports = generateImports({
-    classesUsed: getClassesUsed(text, classes),
+    classesUsed: getClassesUsed({
+      text,
+      classes,
+    }),
     directoryPath,
   });
 
@@ -46,42 +52,6 @@ export async function autoImportNamespace({
   }
 
   await workspace.applyEdit(edit);
-}
-
-function getClassesInDirectory(directory: string): string[] {
-  const files = fs.readdirSync(directory);
-  return files.filter(file => file.endsWith('.php'))
-    .map(file => path.basename(file, '.php'));
-}
-
-function getClassesUsed(text: string, classes: string[]): string[] {
-  const classesUsed: string[] = [];
-
-  classes.forEach(className => {
-    const regex = new RegExp(`\\b${className}\\b`, 'g');
-    if (regex.test(text) && !classesUsed.includes(className)) {
-      classesUsed.push(className);
-    }
-  });
-
-  const existingImports: string[] = extractClassesExistingImports(text);
-
-  return classesUsed.filter(className => !existingImports.includes(className));
-}
-
-function extractClassesExistingImports(text: string): string[] {
-  const regex = /use\s+([a-zA-Z0-9\\]+)/g;
-  const imports: string[] = [];
-
-  let match;
-  while ((match = regex.exec(text)) !== null) {
-    imports.push(match[1]);
-  }
-
-  return imports.map(namespace => {
-    const parts = namespace.split('\\');
-    return parts[parts.length - 1];
-  });
 }
 
 function generateImports({
