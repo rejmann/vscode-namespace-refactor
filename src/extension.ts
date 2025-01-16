@@ -1,5 +1,5 @@
 import { workspace } from 'vscode';
-import { updateNamespaceFiles } from './feature/update-namespace-files';
+import { updateNamespaceFiles } from './feature/update-files';
 import { isPhpProject } from './utils/file-helpers';
 
 export function activate() {
