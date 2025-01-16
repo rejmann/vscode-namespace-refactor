@@ -13,6 +13,8 @@ export function activate() {
     return;
   }
 
+  const userConfig = workspace.getConfiguration('phpNamespaceRefactor');
+
   workspace.onDidRenameFiles((event) => {
     event.files.forEach(async (file) => {
       const oldUri = file.oldUri;
@@ -22,19 +24,18 @@ export function activate() {
         return;
       }
 
-      await updateNamespaceFiles({
-        newUri,
-        oldUri,
-      });
+      await updateNamespaceFiles({ newUri, oldUri });
 
-      await autoImportNamespace({
-        oldFileName: oldUri.fsPath,
-        newUri,
-      });
+      if (userConfig.get<boolean>('autoImportNamespace', true)) {
+        await autoImportNamespace({
+          oldFileName: oldUri.fsPath,
+          newUri,
+        });
+      }
 
-      await removeUnusedImports({
-        newUri,
-      });
+      if (userConfig.get<boolean>('removeUnusedImports', true)) {
+        await removeUnusedImports({ newUri });
+      }
     });
   });
 }

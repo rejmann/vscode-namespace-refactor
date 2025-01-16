@@ -38,7 +38,34 @@
     "onStartupFinished"
   ],
   "main": "./dist/extension.js",
-  "contributes": {},
+  "contributes": {
+    "configuration": {
+      "properties": {
+        "phpNamespaceRefactor.ignoredDirectories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "/vendor/",
+            "/var/",
+            "/cache/"
+          ],
+          "description": "List of additional directories to ignore during the namespace refactoring."
+        },
+        "phpNamespaceRefactor.autoImportNamespace": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically import namespaces when renaming or moving PHP files."
+        },
+        "phpNamespaceRefactor.removeUnusedImports": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically remove unused imports when modifying PHP files."
+        }
+      }
+    }
+  },
   "scripts": {
     "vscode:prepublish": "npm run package",
     "compile": "npm run check-types && npm run lint && node esbuild.js",
@@ -54,6 +81,7 @@
     "test": "vscode-test",
     "release": "standard-version",
     "pack": "vsce package",
+    "release:pack": "npm run release && npm run pack",
     "publish": "vsce package && vsce publish",
     "publish:pre-release": "vsce package --pre-release && vsce publish --pre-release"
   },

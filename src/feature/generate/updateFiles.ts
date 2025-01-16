@@ -83,10 +83,16 @@ async function updateAllFiles({
   useNewNamespace: string,
 }) {
   const phpFiles: Uri[] = await workspace.findFiles('**/*.php');
-  const filteredFiles = phpFiles.filter(file => (
-    !file.fsPath.includes('/vendor/') &&
-    !file.fsPath.includes('/var/')
-  ));
+
+  const defaults = ['/vendor/', '/var/', '/cache/'];
+
+  const userConfig = workspace.getConfiguration('phpNamespaceRefactor');
+  const ignored: string[] = userConfig.get<string[]>('ignoredDirectories', defaults);
+
+  const filteredFiles = phpFiles.filter(file => ![
+    ...defaults,
+    ...ignored,
+  ].some(dir => file.fsPath.includes(dir)));
 
   for (const uri of filteredFiles) {
     const fileContent = await workspace.fs.readFile(uri);
