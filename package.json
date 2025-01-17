@@ -35,11 +35,18 @@
     "Other"
   ],
   "activationEvents": [
-    "onStartupFinished"
+    "onLanguage:php"
   ],
   "main": "./dist/extension.js",
   "contributes": {
     "configuration": {
+      "languages": [
+        {
+          "id": "php",
+          "aliases": ["PHP", "php"],
+          "extensions": [".php"]
+        }
+      ],
       "properties": {
         "phpNamespaceRefactor.ignoredDirectories": {
           "type": "array",

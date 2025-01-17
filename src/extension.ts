@@ -1,39 +1,38 @@
+import * as fs from 'fs';
+import { COMPOSER_FILE, WORKSPACE_ROOT } from './feature/constants';
+import { CONFIG_AUTO_IMPORT_NAMESPACE, CONFIG_REMOVE_UNUSED_IMPORTS, isFeatureEnabled } from './configUtils';
 import { autoImportNamespace } from './feature/autoImport';
-import { isPhpProject } from './utils/fileHelpers';
 import { removeUnusedImports } from './feature/removeUnusedImports';
 import { updateNamespaceFiles } from './feature/generate/updateFiles';
 import { workspace } from 'vscode';
 
-export function activate() {
-  const workspaceRoot = workspace.workspaceFolders
-    ? workspace.workspaceFolders[0].uri.fsPath
-    : '';
+const PHP = '.php';
 
-  if (!isPhpProject(workspaceRoot)) {
+export function activate() {
+  const files: string[] = fs.readdirSync(WORKSPACE_ROOT);
+  if (!files.includes(COMPOSER_FILE)) {
     return;
   }
-
-  const userConfig = workspace.getConfiguration('phpNamespaceRefactor');
 
   workspace.onDidRenameFiles((event) => {
     event.files.forEach(async (file) => {
       const oldUri = file.oldUri;
       const newUri = file.newUri;
 
-      if (!oldUri.fsPath.endsWith('.php') && !newUri.fsPath.endsWith('.php')) {
+      if (!oldUri.fsPath.endsWith(PHP) || !newUri.fsPath.endsWith(PHP)) {
         return;
       }
 
       await updateNamespaceFiles({ newUri, oldUri });
 
-      if (userConfig.get<boolean>('autoImportNamespace', true)) {
+      if (isFeatureEnabled({ key: CONFIG_AUTO_IMPORT_NAMESPACE })) {
         await autoImportNamespace({
           oldFileName: oldUri.fsPath,
           newUri,
         });
       }
 
-      if (userConfig.get<boolean>('removeUnusedImports', true)) {
+      if (isFeatureEnabled({ key: CONFIG_REMOVE_UNUSED_IMPORTS })) {
         await removeUnusedImports({ newUri });
       }
     });

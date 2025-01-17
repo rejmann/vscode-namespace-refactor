@@ -1,3 +1,4 @@
+import { CONFIG_IGNORED_DIRECTORIES, getConfigValue } from '../../configUtils';
 import { Range, TextDocument, Uri, workspace, WorkspaceEdit } from 'vscode';
 import { generateNamespace } from '../generate';
 import { REGEX_NAMESPACE_FILE } from '../constants';
@@ -85,9 +86,10 @@ async function updateAllFiles({
   const phpFiles: Uri[] = await workspace.findFiles('**/*.php');
 
   const defaults = ['/vendor/', '/var/', '/cache/'];
-
-  const userConfig = workspace.getConfiguration('phpNamespaceRefactor');
-  const ignored: string[] = userConfig.get<string[]>('ignoredDirectories', defaults);
+  const ignored = getConfigValue<string[]>({
+    key: CONFIG_IGNORED_DIRECTORIES,
+    defaultValue: defaults,
+  });
 
   const filteredFiles = phpFiles.filter(file => ![
     ...defaults,
