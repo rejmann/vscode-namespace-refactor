@@ -15,16 +15,10 @@ export function getAutoloadComposer({
     };
   }
 
-  const COMPOSER_PATH = workspaceRoot + '/' + COMPOSER_FILE;
-
-  if (!fs.existsSync(COMPOSER_PATH)) {
-    return {
-      autoload: {},
-      autoloadDev: {}
-    };
-  }
-
-  const composerJson = JSON.parse(fs.readFileSync(COMPOSER_PATH, 'utf8'));
+  const composerJson = JSON.parse(fs.readFileSync(
+    workspaceRoot + '/' + COMPOSER_FILE,
+    'utf8',
+  ));
 
   return {
     autoload: composerJson.autoload?.['psr-4'] || {},

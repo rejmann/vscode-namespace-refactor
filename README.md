@@ -14,6 +14,12 @@ The extension automatically detects when a PHP file is moved (dragged and droppe
 
 Ideal for projects using PSR-4, making it easy to reorganize directories without breaking dependencies.
 
+- Ignored Directories: Specify directories to exclude from namespace refactoring.
+
+- Auto Import Namespace: Automatically import objects from the moved class's directory that were not previously imported because they share the same namespace.
+
+- Remove Unused Imports: Clean up unused imports from the same namespace.
+
 ## Requirements
 
 - PHP 7.4+
@@ -35,6 +41,26 @@ This extension contributes the following settings:
     "phpNamespaceRefactor.removeUnusedImports": true
 }
 ```
+
+### ⚙️ Settings Description
+
+**phpNamespaceRefactor.ignoredDirectories**
+
+- Specifies the directories to ignore during the namespace refactor process.
+
+- Example: "/vendor/", "/var/", "/cache/".
+
+**phpNamespaceRefactor.autoImportNamespace**
+
+- Automatically imports objects from the same namespace of the moved class that were not previously imported.
+
+- Default: true.
+
+**phpNamespaceRefactor.removeUnusedImports**
+
+- Removes unused imports from the same namespace after a namespace refactor operation.
+
+- Default: true.
 
 ## Release notes
 
