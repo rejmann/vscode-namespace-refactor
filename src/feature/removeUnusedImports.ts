@@ -1,4 +1,4 @@
-import * as path from 'path';
+import { getCurrentDirectory, removeFileExtension } from '../utils/string';
 import { RelativePattern, Uri, workspace } from 'vscode';
 import { generateNamespace } from './generate';
 import { removeImports } from './removeUnusedImports/removeImports';
@@ -14,13 +14,13 @@ export async function removeUnusedImports({
     uri: newUri.fsPath,
   });
 
-  const directoryPath = path.dirname(newUri.fsPath);
+  const directoryPath = getCurrentDirectory(newUri.fsPath);
 
   const phpFiles: Uri[] = await workspace.findFiles(
     new RelativePattern(Uri.parse(`file://${directoryPath}`), '*.php')
   );
 
-  const fileNames: string[] = phpFiles.map(uri => path.basename(uri.fsPath, '.php'))
+  const fileNames: string[] = phpFiles.map(uri => removeFileExtension(uri.fsPath))
     .filter(Boolean)
     .filter(name => name !== className);
 
