@@ -74,6 +74,16 @@
           "type": "boolean",
           "default": true,
           "description": "Automatically remove unused imports when modifying PHP files."
+        },
+        "phpNamespaceRefactor.additionalExtensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "php"
+          ],
+          "description": "List of additional file extensions to consider for namespace refactoring."
         }
       }
     }

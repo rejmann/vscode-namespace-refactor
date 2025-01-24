@@ -3,6 +3,7 @@ import { workspace } from 'vscode';
 export const CONFIG_AUTO_IMPORT_NAMESPACE = 'autoImportNamespace';
 export const CONFIG_REMOVE_UNUSED_IMPORTS = 'removeUnusedImports';
 export const CONFIG_IGNORED_DIRECTORIES = 'ignoredDirectories';
+export const CONFIG_ADDITIONAL_EXTENSIONS = 'additionalExtensions';
 
 const userConfig = workspace.getConfiguration('phpNamespaceRefactor');
 
