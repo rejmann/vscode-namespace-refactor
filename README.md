@@ -20,6 +20,8 @@ Ideal for projects using PSR-4, making it easy to reorganize directories without
 
 - Remove Unused Imports: Clean up unused imports from the same namespace.
 
+- Additional Extensions:  Specify the file extensions to consider during the namespace refactoring process.
+
 ## Requirements
 
 - PHP 7.4+
@@ -38,7 +40,10 @@ This extension contributes the following settings:
         "/cache/"
     ],
     "phpNamespaceRefactor.autoImportNamespace": true,
-    "phpNamespaceRefactor.removeUnusedImports": true
+    "phpNamespaceRefactor.removeUnusedImports": true,
+    "phpNamespaceRefactor.additionalExtensions": [
+        "php"
+    ],
 }
 ```
 
@@ -48,7 +53,7 @@ This extension contributes the following settings:
 
 - Specifies the directories to ignore during the namespace refactor process.
 
-- Example: "/vendor/", "/var/", "/cache/".
+- Default: "/vendor/", "/var/", "/cache/".
 
 **phpNamespaceRefactor.autoImportNamespace**
 
@@ -61,6 +66,12 @@ This extension contributes the following settings:
 - Removes unused imports from the same namespace after a namespace refactor operation.
 
 - Default: true.
+
+**phpNamespaceRefactor.additionalExtensions**
+
+- Specifies the file extensions to consider during the namespace refactor process.
+
+- Default: "php".
 
 ## Release notes
 
