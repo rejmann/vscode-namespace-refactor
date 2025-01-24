@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/rejmann/php-namespace-refactor/compare/v0.0.7...v0.0.8) (2025-01-24)
+
+
+### Bug Fixes
+
+* ignore own file ([08822d0](https://github.com/rejmann/php-namespace-refactor/commit/08822d07e60249b3c6fa71025543baf947e09a94))
+* replace entire namespace line to avoid half replacement ([8dc0ee1](https://github.com/rejmann/php-namespace-refactor/commit/8dc0ee19bce1290f6fe953b11d08edeeeab19791))
+
 ### [0.0.7](https://github.com/rejmann/php-namespace-refactor/compare/v0.0.6...v0.0.7) (2025-01-21)
 
 
