@@ -1,7 +1,6 @@
 import { CONFIG_IGNORED_DIRECTORIES, getConfigValue } from '../../configUtils';
 import { Range, TextDocument, Uri, workspace, WorkspaceEdit } from 'vscode';
 import { generateNamespace } from '../generate';
-import { REGEX_NAMESPACE_FILE } from '../constants';
 
 interface Props {
   newUri: Uri,
@@ -12,10 +11,7 @@ export async function updateNamespaceFiles({
   newUri,
   oldUri,
 }: Props) {
-  const {
-    namespace: newNamespace,
-    fullNamespace: useNewNamespace,
-  } = generateNamespace({
+  const { namespace: newNamespace, fullNamespace: useNewNamespace } = generateNamespace({
     uri: newUri.fsPath,
   });
 
@@ -23,20 +19,16 @@ export async function updateNamespaceFiles({
     return;
   }
 
-  const {
-    namespace: oldNamespace,
-    fullNamespace: useOldNamespace,
-  } = generateNamespace({
+  const { fullNamespace: useOldNamespace } = generateNamespace({
     uri: oldUri.fsPath,
   });
 
-  const updated = updateCurrentFile({
-    oldNamespace,
+  const updated = await updateCurrentFile({
     newNamespace,
     newUri,
   });
 
-  if (null === updated) {
+  if (!updated) {
     return;
   }
 
@@ -48,33 +40,39 @@ export async function updateNamespaceFiles({
 }
 
 async function updateCurrentFile({
-  oldNamespace,
   newNamespace,
   newUri,
 }: {
-  oldNamespace: string,
   newNamespace: string,
   newUri: Uri,
 }) {
   const document: TextDocument = await workspace.openTextDocument(newUri.fsPath);
   const text = document.getText();
 
-  if (!text.match(REGEX_NAMESPACE_FILE)) {
-    return null;
+  const namespaceRegex = /^\s*namespace\s+[\w\\]+;/m;
+  const match = text.match(namespaceRegex);
+
+  if (!match) {
+    return false;
   }
 
-  const startPosition = document.positionAt(text.indexOf(oldNamespace));
-  const endPosition = startPosition.translate(0, oldNamespace.length);
+  const startIndex = match.index!;
+  const startPosition = document.positionAt(startIndex);
+  const endPosition = document.positionAt(startIndex + match[0].length);
+
+  const namespaceReplace = `\nnamespace ${newNamespace};`;
 
   const edit = new WorkspaceEdit();
 
   edit.replace(
     newUri,
     new Range(startPosition, endPosition),
-    newNamespace,
+    namespaceReplace,
   );
 
   workspace.applyEdit(edit);
+
+  return true;
 }
 
 async function updateAllFiles({
