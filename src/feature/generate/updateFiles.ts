@@ -43,6 +43,7 @@ export async function updateNamespaceFiles({
   updateAllFiles({
     useOldNamespace,
     useNewNamespace,
+    ignoreFile: newUri.fsPath,
   });
 }
 
@@ -79,9 +80,11 @@ async function updateCurrentFile({
 async function updateAllFiles({
   useOldNamespace,
   useNewNamespace,
+  ignoreFile,
 }: {
   useOldNamespace: string,
   useNewNamespace: string,
+  ignoreFile: string,
 }) {
   const phpFiles: Uri[] = await workspace.findFiles('**/*.php');
 
@@ -97,7 +100,13 @@ async function updateAllFiles({
   ].some(dir => file.fsPath.includes(dir)));
 
   for (const uri of filteredFiles) {
-    const fileContent = await workspace.fs.readFile(uri);
+    if (ignoreFile === uri.fsPath) {
+      continue;
+    }
+
+    const fileStream = workspace.fs;
+
+    const fileContent = await fileStream.readFile(uri);
     let text = Buffer.from(fileContent).toString();
 
     if (!text.includes(useOldNamespace)) {
@@ -106,6 +115,6 @@ async function updateAllFiles({
 
     text = text.replace(useOldNamespace, useNewNamespace);
 
-    await workspace.fs.writeFile(uri, Buffer.from(text));
+    await fileStream.writeFile(uri, Buffer.from(text));
   }
 }
