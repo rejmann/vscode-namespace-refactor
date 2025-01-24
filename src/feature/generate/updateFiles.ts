@@ -1,6 +1,6 @@
-import { CONFIG_IGNORED_DIRECTORIES, getConfigValue } from '../../configUtils';
 import { Range, TextDocument, Uri, workspace, WorkspaceEdit } from 'vscode';
 import { generateNamespace } from '../generate';
+import { updateAllFiles } from './updateFiles/updateAllFiles';
 
 interface Props {
   newUri: Uri,
@@ -73,46 +73,4 @@ async function updateCurrentFile({
   workspace.applyEdit(edit);
 
   return true;
-}
-
-async function updateAllFiles({
-  useOldNamespace,
-  useNewNamespace,
-  ignoreFile,
-}: {
-  useOldNamespace: string,
-  useNewNamespace: string,
-  ignoreFile: string,
-}) {
-  const phpFiles: Uri[] = await workspace.findFiles('**/*.php');
-
-  const defaults = ['/vendor/', '/var/', '/cache/'];
-  const ignored = getConfigValue<string[]>({
-    key: CONFIG_IGNORED_DIRECTORIES,
-    defaultValue: defaults,
-  });
-
-  const filteredFiles = phpFiles.filter(file => ![
-    ...defaults,
-    ...ignored,
-  ].some(dir => file.fsPath.includes(dir)));
-
-  for (const uri of filteredFiles) {
-    if (ignoreFile === uri.fsPath) {
-      continue;
-    }
-
-    const fileStream = workspace.fs;
-
-    const fileContent = await fileStream.readFile(uri);
-    let text = Buffer.from(fileContent).toString();
-
-    if (!text.includes(useOldNamespace)) {
-      continue;
-    }
-
-    text = text.replace(useOldNamespace, useNewNamespace);
-
-    await fileStream.writeFile(uri, Buffer.from(text));
-  }
 }
