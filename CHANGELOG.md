@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.8](https://github.com/rejmann/php-namespace-refactor/compare/v0.0.8...v1.0.8) (2025-01-24)
+
+
+### Features
+
+* allow specifying additional extensions for namespace refactor ([24d035c](https://github.com/rejmann/php-namespace-refactor/commit/24d035c623d6d59d7f26fe5019681879a2911f9a))
+
 ### [0.0.8](https://github.com/rejmann/php-namespace-refactor/compare/v0.0.7...v0.0.8) (2025-01-24)
 
 
