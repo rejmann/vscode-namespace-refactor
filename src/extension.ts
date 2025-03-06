@@ -32,7 +32,7 @@ export function activate() {
         });
       }
 
-      await removeUnusedImports({ newUri });
+      await removeUnusedImports({ uri: newUri });
     });
   });
 }

@@ -2,8 +2,8 @@ import { CONFIG_ADDITIONAL_EXTENSIONS, CONFIG_IGNORED_DIRECTORIES, getConfigValu
 import { Range, TextDocument, Uri, workspace, WorkspaceEdit } from 'vscode';
 import { basename } from 'path';
 import { createImport } from '../../autoImport/createImport';
-import { generateNamespace } from '../../generate';
 import { getCurrentDirectory } from '../../../utils/string';
+import { removeUnusedImports } from '../../removeUnusedImports';
 
 const DEFAULT_DIRECTORIES = ['/vendor/', '/var/', '/cache/'];
 const DEFAULT_EXTENSION_PHP = 'php';
@@ -11,14 +11,14 @@ const DEFAULT_EXTENSION_PHP = 'php';
 interface Props {
   useOldNamespace: string,
   useNewNamespace: string,
-  ignoreFile: string,
+  newUri: Uri,
   oldUri: Uri
 }
 
 export async function updateAllFiles({
   useOldNamespace,
   useNewNamespace,
-  ignoreFile,
+  newUri,
   oldUri,
 }: Props) {
   const directoryPath = getCurrentDirectory(oldUri.fsPath);
@@ -26,6 +26,7 @@ export async function updateAllFiles({
 
   const useImport = createImport({ fullNamespace: useNewNamespace });
 
+  const ignoreFile = newUri.fsPath;
   for (const file of await getFiles()) {
     if (ignoreFile === file.fsPath) {
       continue;
@@ -51,6 +52,8 @@ export async function updateAllFiles({
 
     await fileStream.writeFile(file, Buffer.from(text));
   }
+
+  await removeUnusedImports({ uri: newUri });
 }
 
 async function getFiles() {
