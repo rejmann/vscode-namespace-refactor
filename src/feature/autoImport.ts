@@ -1,4 +1,5 @@
 import { Range, TextDocument, Uri, workspace, WorkspaceEdit } from 'vscode';
+import { createImport } from './autoImport/createImport';
 import { generateNamespace } from './generate';
 import { getClassesInDirectory } from './autoImport/getClassInDirectory';
 import { getClassesUsed } from './autoImport/getClassesUsed';
@@ -33,14 +34,14 @@ export async function autoImportNamespace({
     directoryPath,
   });
 
-  if (!imports || (getCurrentDirectory(oldFileName) === getCurrentDirectory(newUri.fsPath))) {
+  if (!imports || (directoryPath === getCurrentDirectory(newUri.fsPath))) {
     return;
   }
 
   const useRegex = /^use\s+[^\n]+;/gm;
   const useMatches = [...text.matchAll(useRegex)];
 
-  const lastUseMatch = useMatches[useMatches.length - 1];
+  const lastUseMatch = useMatches[useMatches.length - 1] || 0;
   if (!lastUseMatch) {
     return;
   }
@@ -67,7 +68,7 @@ function generateImports({
         uri: directoryPath + '/' + className + '.php',
       });
 
-      return '\n' + 'use ' + fullNamespace + ';';
+      return createImport({ fullNamespace });
     })
     .join('');
 }
