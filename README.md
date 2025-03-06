@@ -26,7 +26,7 @@ Ideal for projects using PSR-4, making it easy to reorganize directories without
 
 - PHP 7.4+
 - Composer configured in the project for namespace detection.
-- Workspace configurado no Visual Studio Code com arquivos .php
+- Workspace configured no Visual Studio Code com arquivos .php
 
 ## Extension Settings
 
