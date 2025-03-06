@@ -32,10 +32,11 @@ export async function updateNamespaceFiles({
     return;
   }
 
-  updateAllFiles({
+  await updateAllFiles({
     useOldNamespace,
     useNewNamespace,
-    ignoreFile: newUri.fsPath,
+    newUri,
+    oldUri,
   });
 }
 

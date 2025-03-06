@@ -32,9 +32,7 @@ export function activate() {
         });
       }
 
-      if (isFeatureEnabled({ key: CONFIG_REMOVE_UNUSED_IMPORTS })) {
-        await removeUnusedImports({ newUri });
-      }
+      await removeUnusedImports({ uri: newUri });
     });
   });
 }
