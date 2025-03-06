@@ -1,3 +1,4 @@
+import { CONFIG_REMOVE_UNUSED_IMPORTS, isFeatureEnabled } from '../configUtils';
 import { getCurrentDirectory, removeFileExtension } from '../utils/string';
 import { RelativePattern, Uri, workspace } from 'vscode';
 import { generateNamespace } from './generate';
@@ -10,6 +11,10 @@ interface Props {
 export async function removeUnusedImports({
   newUri,
 }: Props) {
+  if (!isFeatureEnabled({ key: CONFIG_REMOVE_UNUSED_IMPORTS })) {
+    return;
+  }
+
   const { className } = generateNamespace({
     uri: newUri.fsPath,
   });
