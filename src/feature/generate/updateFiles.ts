@@ -1,5 +1,5 @@
 import { Range, TextDocument, Uri, workspace, WorkspaceEdit } from 'vscode';
-import { generateNamespace } from '../generate';
+import { generateNamespace } from '../../domain/namespace/generateNamespace';
 import { updateAllFiles } from './updateFiles/updateAllFiles';
 
 interface Props {

@@ -2,7 +2,7 @@ import { CONFIG_ADDITIONAL_EXTENSIONS, CONFIG_IGNORED_DIRECTORIES, getConfigValu
 import { Range, TextDocument, Uri, workspace, WorkspaceEdit } from 'vscode';
 import { basename } from 'path';
 import { createImport } from '../../autoImport/createImport';
-import { getCurrentDirectory } from '../../../utils/string';
+import { extractDirectoryFromPath } from '../../../utils/filePathUtils';
 import { removeUnusedImports } from '../../removeUnusedImports';
 
 const DEFAULT_DIRECTORIES = ['/vendor/', '/var/', '/cache/'];
@@ -21,7 +21,7 @@ export async function updateAllFiles({
   newUri,
   oldUri,
 }: Props) {
-  const directoryPath = getCurrentDirectory(oldUri.fsPath);
+  const directoryPath = extractDirectoryFromPath(oldUri.fsPath);
   const className = basename(oldUri.fsPath, '.php');
 
   const useImport = createImport({ fullNamespace: useNewNamespace });
@@ -88,7 +88,7 @@ async function updateFilesCurrentDir({
   useImport: string
   className: string
 }) {
-  const currentDir = getCurrentDirectory(file.fsPath);
+  const currentDir = extractDirectoryFromPath(file.fsPath);
   if (oldDirectoryPath !== currentDir) {
     return;
   }

@@ -1,4 +1,4 @@
-import { formatFileName } from '../../utils/string';
+import { removeWorkspaceRoot } from '../../utils/filePathUtils';
 import { getAutoloadComposer } from './getAutoloadComposer';
 
 type AutoloadType = {
@@ -22,7 +22,7 @@ export function getSrcAutoload({
     };
   }
 
-  const newDir = formatFileName(uri);
+  const newDir = removeWorkspaceRoot(uri);
 
   return {
     autoload: resolvePathFromPrefix({

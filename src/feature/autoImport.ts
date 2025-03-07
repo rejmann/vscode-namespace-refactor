@@ -1,9 +1,9 @@
 import { Range, TextDocument, Uri, workspace, WorkspaceEdit } from 'vscode';
 import { createImport } from './autoImport/createImport';
-import { generateNamespace } from './generate';
+import { extractDirectoryFromPath } from '../utils/filePathUtils';
+import { generateNamespace } from '../domain/namespace/generateNamespace';
 import { getClassesInDirectory } from './autoImport/getClassInDirectory';
 import { getClassesUsed } from './autoImport/getClassesUsed';
-import { getCurrentDirectory } from '../utils/string';
 
 interface Props {
   oldFileName: string
@@ -14,7 +14,7 @@ export async function autoImportNamespace({
   oldFileName,
   newUri,
 }: Props) {
-  const directoryPath = getCurrentDirectory(oldFileName);
+  const directoryPath = extractDirectoryFromPath(oldFileName);
   const classes: string[] = getClassesInDirectory({
     directory: directoryPath,
   });
@@ -34,7 +34,7 @@ export async function autoImportNamespace({
     directoryPath,
   });
 
-  if (!imports || (directoryPath === getCurrentDirectory(newUri.fsPath))) {
+  if (!imports || (directoryPath === extractDirectoryFromPath(newUri.fsPath))) {
     return;
   }
 
