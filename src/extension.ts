@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { COMPOSER_FILE, WORKSPACE_ROOT } from './feature/constants';
+import { COMPOSER_FILE, WORKSPACE_ROOT } from './utils/constants';
 import { CONFIG_AUTO_IMPORT_NAMESPACE, CONFIG_REMOVE_UNUSED_IMPORTS, isFeatureEnabled } from './configUtils';
 import { autoImportNamespace } from './feature/autoImport';
 import { removeUnusedImports } from './feature/removeUnusedImports';

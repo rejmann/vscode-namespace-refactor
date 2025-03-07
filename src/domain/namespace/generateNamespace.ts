@@ -1,17 +1,15 @@
 import { createNamespace, Namespace } from './createNamespace';
 import { extractClassNameFromPath } from '../../utils/filePathUtils';
-import { getSrcAutoload } from '../../feature/generate/getSrcAutoload';
-import { WORKSPACE_ROOT } from '../../feature/constants';
+import { mapAutoloadNamespaces } from '../../infrastructure/autoload/mapAutoloadNamespaces';
 
 interface Props {
   uri: string
 }
 
-export function generateNamespace({
+export async function generateNamespace({
   uri,
-}: Props): Namespace {
-  const { autoload, autoloadDev } = getSrcAutoload({
-    workspaceRoot: WORKSPACE_ROOT,
+}: Props): Promise<Namespace> {
+  const { autoload, autoloadDev } = await mapAutoloadNamespaces({
     uri
   });
 

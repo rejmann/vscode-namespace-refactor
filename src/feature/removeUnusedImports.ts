@@ -13,7 +13,7 @@ export async function removeUnusedImports({ uri }: Props) {
     return;
   }
 
-  const { className } = generateNamespace({
+  const { className } = await generateNamespace({
     uri: uri.fsPath,
   });
 

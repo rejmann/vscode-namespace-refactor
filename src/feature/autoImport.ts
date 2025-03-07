@@ -63,8 +63,8 @@ function generateImports({
   directoryPath: string
 }): string {
   return classesUsed
-    .map((className) => {
-      const { fullNamespace } = generateNamespace({
+    .map(async (className) => {
+      const { fullNamespace } = await generateNamespace({
         uri: directoryPath + '/' + className + '.php',
       });
 

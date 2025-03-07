@@ -11,7 +11,7 @@ export async function updateNamespaceFiles({
   newUri,
   oldUri,
 }: Props) {
-  const { namespace: newNamespace, fullNamespace: useNewNamespace } = generateNamespace({
+  const { namespace: newNamespace, fullNamespace: useNewNamespace } = await generateNamespace({
     uri: newUri.fsPath,
   });
 
@@ -19,7 +19,7 @@ export async function updateNamespaceFiles({
     return;
   }
 
-  const { fullNamespace: useOldNamespace } = generateNamespace({
+  const { fullNamespace: useOldNamespace } = await generateNamespace({
     uri: oldUri.fsPath,
   });
 

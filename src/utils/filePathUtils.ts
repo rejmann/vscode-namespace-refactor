@@ -1,5 +1,5 @@
 import { basename, dirname } from 'path';
-import { WORKSPACE_ROOT } from '../feature/constants';
+import { WORKSPACE_ROOT } from '../utils/constants';
 
 type AbsolutePath = string | null | undefined
 
