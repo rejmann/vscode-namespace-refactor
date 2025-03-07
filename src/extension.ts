@@ -1,7 +1,8 @@
 import * as fs from 'fs';
 import { COMPOSER_FILE, WORKSPACE_ROOT } from './utils/constants';
-import { CONFIG_AUTO_IMPORT_NAMESPACE, CONFIG_REMOVE_UNUSED_IMPORTS, isFeatureEnabled } from './configUtils';
 import { autoImportNamespace } from './feature/autoImport';
+import { ConfigKeys } from './infrastructure/workspace/configTypes';
+import { isConfigEnabled } from './infrastructure/workspace/vscodeConfig';
 import { removeUnusedImports } from './feature/removeUnusedImports';
 import { updateNamespaceFiles } from './feature/generate/updateFiles';
 import { workspace } from 'vscode';
@@ -25,7 +26,7 @@ export function activate() {
 
       await updateNamespaceFiles({ newUri, oldUri });
 
-      if (isFeatureEnabled({ key: CONFIG_AUTO_IMPORT_NAMESPACE })) {
+      if (isConfigEnabled({ key: ConfigKeys.AUTO_IMPORT_NAMESPACE })) {
         await autoImportNamespace({
           oldFileName: oldUri.fsPath,
           newUri,

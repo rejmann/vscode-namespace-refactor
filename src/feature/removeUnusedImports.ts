@@ -1,7 +1,8 @@
-import { CONFIG_REMOVE_UNUSED_IMPORTS, isFeatureEnabled } from '../configUtils';
 import { extractClassNameFromPath, extractDirectoryFromPath } from '../utils/filePathUtils';
 import { RelativePattern, Uri, workspace } from 'vscode';
+import { ConfigKeys } from './../infrastructure/workspace/configTypes';
 import { generateNamespace } from '../domain/namespace/generateNamespace';
+import { isConfigEnabled } from '../infrastructure/workspace/vscodeConfig';
 import { removeImports } from './removeUnusedImports/removeImports';
 
 interface Props {
@@ -9,7 +10,7 @@ interface Props {
 }
 
 export async function removeUnusedImports({ uri }: Props) {
-  if (!isFeatureEnabled({ key: CONFIG_REMOVE_UNUSED_IMPORTS })) {
+  if (!isConfigEnabled({ key: ConfigKeys.REMOVE_UNUSED_IMPORTS })) {
     return;
   }
 

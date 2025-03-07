@@ -1,8 +1,9 @@
-import { CONFIG_ADDITIONAL_EXTENSIONS, CONFIG_IGNORED_DIRECTORIES, getConfigValue } from '../../../configUtils';
 import { Range, TextDocument, Uri, workspace, WorkspaceEdit } from 'vscode';
 import { basename } from 'path';
+import { ConfigKeys } from './../../../infrastructure/workspace/configTypes';
 import { createImport } from '../../autoImport/createImport';
 import { extractDirectoryFromPath } from '../../../utils/filePathUtils';
+import { getWorkspaceConfig } from '../../../infrastructure/workspace/vscodeConfig';
 import { removeUnusedImports } from '../../removeUnusedImports';
 
 const DEFAULT_DIRECTORIES = ['/vendor/', '/var/', '/cache/'];
@@ -57,8 +58,8 @@ export async function updateAllFiles({
 }
 
 async function getFiles() {
-  const extensions = getConfigValue<string[]>({
-    key: CONFIG_ADDITIONAL_EXTENSIONS,
+  const extensions = getWorkspaceConfig<string[]>({
+    key: ConfigKeys.ADDITIONAL_EXTENSIONS,
     defaultValue: [DEFAULT_EXTENSION_PHP],
   });
 
@@ -66,8 +67,8 @@ async function getFiles() {
     `**/*.{${[DEFAULT_EXTENSION_PHP, ...extensions].join(',')}}`,
   );
 
-  const ignoredDirectories = getConfigValue<string[]>({
-    key: CONFIG_IGNORED_DIRECTORIES,
+  const ignoredDirectories = getWorkspaceConfig<string[]>({
+    key: ConfigKeys.IGNORED_DIRECTORIES,
     defaultValue: DEFAULT_DIRECTORIES,
   });
 
