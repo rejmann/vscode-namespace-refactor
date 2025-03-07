@@ -1,4 +1,4 @@
-import { generateNamespace } from '../../../domain/namespace/generateNamespace';
+import { generateNamespace } from '@domain/namespace/generateNamespace';
 import { updateInCurrentFile } from './updateInCurrentFile';
 import { updateReferencesInFiles } from './updateReferencesInFiles';
 import { Uri } from 'vscode';

@@ -1,4 +1,4 @@
-import { extractClassNameFromPath } from '../../../../infra/utils/filePathUtils';
+import { extractClassNameFromPath } from '@infra/utils/filePathUtils';
 import { readdirSync } from 'fs';
 
 interface Props {

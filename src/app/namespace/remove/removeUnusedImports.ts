@@ -1,8 +1,8 @@
-import { extractClassNameFromPath, extractDirectoryFromPath } from '../../../infra/utils/filePathUtils';
+import { extractClassNameFromPath, extractDirectoryFromPath } from '@infra/utils/filePathUtils';
 import { RelativePattern, Uri, workspace } from 'vscode';
-import { ConfigKeys } from '../../../infra/workspace/configTypes';
-import { generateNamespace } from '../../../domain/namespace/generateNamespace';
-import { isConfigEnabled } from '../../../infra/workspace/vscodeConfig';
+import { ConfigKeys } from '@infra/workspace/configTypes';
+import { generateNamespace } from '@domain/namespace/generateNamespace';
+import { isConfigEnabled } from '@infra/workspace/vscodeConfig';
 import { removeImports } from './removeImports';
 
 interface Props {

@@ -1,6 +1,6 @@
 import { Uri, workspace } from 'vscode';
-import { ConfigKeys } from '../../infra/workspace/configTypes';
-import { getWorkspaceConfig } from '../../infra/workspace/vscodeConfig';
+import { ConfigKeys } from '@infra/workspace/configTypes';
+import { getWorkspaceConfig } from '@infra/workspace/vscodeConfig';
 
 const DEFAULT_DIRECTORIES = ['/vendor/', '/var/', '/cache/'];
 const DEFAULT_EXTENSION_PHP = 'php';
