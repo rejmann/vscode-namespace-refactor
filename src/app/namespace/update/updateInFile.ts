@@ -1,7 +1,8 @@
-import { Range, Uri, workspace, WorkspaceEdit } from 'vscode';
+import { Uri, WorkspaceEdit } from 'vscode';
 import { extractDirectoryFromPath } from '@infra/utils/filePathUtils';
 import { findLastUseEndIndex } from '@domain/namespace/findLastUseEndIndex';
 import { insertUseStatement } from '@domain/namespace/import/insertUseStatement';
+import { openTextDocument } from '../openTextDocument';
 
 interface Props {
   file: Uri
@@ -21,8 +22,7 @@ export async function updateInFile({
     return;
   }
 
-  const document = await workspace.openTextDocument(file.fsPath);
-  const text = document.getText();
+  const { document, text } = await openTextDocument({ uri: file });
 
   if (! text.includes(className)) {
     return;

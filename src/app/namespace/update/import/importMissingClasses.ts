@@ -1,10 +1,11 @@
-import { Uri, workspace, WorkspaceEdit } from 'vscode';
+import { Uri, WorkspaceEdit } from 'vscode';
 import { extractDirectoryFromPath } from '@infra/utils/filePathUtils';
 import { findLastUseEndIndex } from '@domain/namespace/findLastUseEndIndex';
 import { findUnimportedClasses } from './findUnimportedClasses';
 import { generateUseStatementsForClasses } from '@domain/namespace/generateUseStatementsForClasses';
 import { getClassesNamesInDirectory } from './getClassesNamesInDirectory';
 import { insertUseStatement } from '@domain/namespace/import/insertUseStatement';
+import { openTextDocument } from '@app/namespace/openTextDocument';
 
 interface Props {
   oldFileName: string
@@ -24,8 +25,7 @@ export async function importMissingClasses({
     return;
   }
 
-  const document = await workspace.openTextDocument(newUri.fsPath);
-  const text = document.getText();
+  const { document, text } = await openTextDocument({ uri: newUri });
 
   const imports = await generateUseStatementsForClasses({
     classesUsed: findUnimportedClasses({
