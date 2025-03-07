@@ -1,4 +1,4 @@
-import { extractClassNameFromPath, extractDirectoryFromPath } from '../../../utils/filePathUtils';
+import { extractClassNameFromPath, extractDirectoryFromPath } from '../../../infrastructure/utils/filePathUtils';
 import { Uri, workspace } from 'vscode';
 import { findPhpFilesInWorkspace } from '../../workespace/findPhpFilesInWorkspace';
 import { generateUseStatement } from '../../../domain/namespace/generateUseStatement';

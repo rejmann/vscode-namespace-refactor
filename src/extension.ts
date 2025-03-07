@@ -1,7 +1,7 @@
 import * as fs from 'fs';
-import { COMPOSER_FILE, WORKSPACE_ROOT } from './utils/constants';
-import { autoImportNamespace } from './feature/autoImport';
+import { COMPOSER_FILE, WORKSPACE_ROOT } from './infrastructure/utils/constants';
 import { ConfigKeys } from './infrastructure/workspace/configTypes';
+import { importMissingClasses } from './application/namespace/update/import/importMissingClasses';
 import { isConfigEnabled } from './infrastructure/workspace/vscodeConfig';
 import { removeUnusedImports } from './application/namespace/remove/removeUnusedImports';
 import { updateReferences } from './application/namespace/update/updateReferences';
@@ -27,7 +27,7 @@ export function activate() {
       await updateReferences({ newUri, oldUri });
 
       if (isConfigEnabled({ key: ConfigKeys.AUTO_IMPORT_NAMESPACE })) {
-        await autoImportNamespace({
+        await importMissingClasses({
           oldFileName: oldUri.fsPath,
           newUri,
         });

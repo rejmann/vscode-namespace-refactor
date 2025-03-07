@@ -1,4 +1,4 @@
-import { extractClassNameFromPath, extractDirectoryFromPath } from '../../../utils/filePathUtils';
+import { extractClassNameFromPath, extractDirectoryFromPath } from '../../../infrastructure/utils/filePathUtils';
 import { RelativePattern, Uri, workspace } from 'vscode';
 import { ConfigKeys } from '../../../infrastructure/workspace/configTypes';
 import { generateNamespace } from '../../../domain/namespace/generateNamespace';

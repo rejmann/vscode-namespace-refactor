@@ -1,5 +1,5 @@
 import { createNamespace, Namespace } from './createNamespace';
-import { extractClassNameFromPath } from '../../utils/filePathUtils';
+import { extractClassNameFromPath } from '../../infrastructure/utils/filePathUtils';
 import { mapAutoloadNamespaces } from '../../infrastructure/autoload/mapAutoloadNamespaces';
 
 interface Props {
