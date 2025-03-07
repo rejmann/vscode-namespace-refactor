@@ -7,5 +7,5 @@ export function generateUseStatement({ fullNamespace }: Props) {
     throw new Error('O parâmetro "fullNamespace" deve ser uma string válida.');
   }
 
-  return `\nuse${fullNamespace};`;
+  return `\nuse ${fullNamespace};`;
 }
