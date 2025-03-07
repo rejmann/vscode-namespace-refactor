@@ -1,9 +1,10 @@
-import { Range, Uri, workspace, WorkspaceEdit } from 'vscode';
+import { Uri, workspace, WorkspaceEdit } from 'vscode';
 import { extractDirectoryFromPath } from '@infra/utils/filePathUtils';
 import { findLastUseEndIndex } from '@domain/namespace/findLastUseEndIndex';
 import { findUnimportedClasses } from './findUnimportedClasses';
 import { generateUseStatementsForClasses } from '@domain/namespace/generateUseStatementsForClasses';
 import { getClassesNamesInDirectory } from './getClassesNamesInDirectory';
+import { insertUseStatement } from '@domain/namespace/import/insertUseStatement';
 
 interface Props {
   oldFileName: string
@@ -44,10 +45,20 @@ export async function importMissingClasses({
   }
 
   const edit = new WorkspaceEdit();
-  for (const use of imports) {
-    const endPosition = document.positionAt(lastUseEndIndex);
-    edit.replace(newUri, new Range(endPosition, endPosition), use);
-  }
 
-  await workspace.applyEdit(edit);
+  const total = imports.length;
+  let row = 1;
+
+  for (const use of imports) {
+    await insertUseStatement({
+      document,
+      workspaceEdit: edit,
+      uri: newUri,
+      lastUseEndIndex,
+      useNamespace: use,
+      flush: total === row,
+    });
+
+    row++;
+  }
 }
