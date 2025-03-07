@@ -1,5 +1,6 @@
 import { Range, Uri, workspace, WorkspaceEdit } from 'vscode';
 import { extractDirectoryFromPath } from '@infra/utils/filePathUtils';
+import { findLastUseEndIndex } from '@domain/namespace/findLastUseEndIndex';
 
 interface Props {
   file: Uri
@@ -26,12 +27,10 @@ export async function updateInFile({
     return;
   }
 
-  const useRegex = /^use\s+[^\n]+;/gm;
-  const useMatches = [...text.matchAll(useRegex)];
-  const lastUseMatch = useMatches[useMatches.length - 1] || 1;
+  const lastUseEndIndex = findLastUseEndIndex({ document });
 
   const edit = new WorkspaceEdit();
-  const endPosition = document.positionAt(lastUseMatch.index + lastUseMatch[0].length);
+  const endPosition = document.positionAt(lastUseEndIndex);
   edit.replace(file, new Range(endPosition, endPosition), useImport);
 
   await workspace.applyEdit(edit);

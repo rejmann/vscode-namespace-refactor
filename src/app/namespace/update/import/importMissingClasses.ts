@@ -1,5 +1,6 @@
 import { Range, Uri, workspace, WorkspaceEdit } from 'vscode';
 import { extractDirectoryFromPath } from '@infra/utils/filePathUtils';
+import { findLastUseEndIndex } from '@domain/namespace/findLastUseEndIndex';
 import { findUnimportedClasses } from './findUnimportedClasses';
 import { generateUseStatementsForClasses } from '@domain/namespace/generateUseStatementsForClasses';
 import { getClassesNamesInDirectory } from './getClassesNamesInDirectory';
@@ -37,17 +38,14 @@ export async function importMissingClasses({
     return;
   }
 
-  const useRegex = /^use\s+[^\n]+;/gm;
-  const useMatches = [...text.matchAll(useRegex)];
-
-  const lastUseMatch = useMatches[useMatches.length - 1] || 0;
-  if (!lastUseMatch) {
+  const lastUseEndIndex = findLastUseEndIndex({ document });
+  if (0 === lastUseEndIndex) {
     return;
   }
 
   const edit = new WorkspaceEdit();
   for (const use of imports) {
-    const endPosition = document.positionAt(lastUseMatch.index + lastUseMatch[0].length);
+    const endPosition = document.positionAt(lastUseEndIndex);
     edit.replace(newUri, new Range(endPosition, endPosition), use);
   }
 
