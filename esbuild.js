@@ -1,7 +1,7 @@
-const esbuild = require("esbuild");
+const esbuild = require("esbuild"); // eslint-disable-line
 
-const production = process.argv.includes('--production');
-const watch = process.argv.includes('--watch');
+const production = process.argv.includes('--production'); // eslint-disable-line
+const watch = process.argv.includes('--watch'); // eslint-disable-line
 
 /**
  * @type {import('esbuild').Plugin}
@@ -11,14 +11,14 @@ const esbuildProblemMatcherPlugin = {
 
 	setup(build) {
 		build.onStart(() => {
-			console.log('[watch] build started');
+			console.log('[watch] build started'); // eslint-disable-line
 		});
 		build.onEnd((result) => {
 			result.errors.forEach(({ text, location }) => {
-				console.error(`✘ [ERROR] ${text}`);
-				console.error(`    ${location.file}:${location.line}:${location.column}:`);
+				console.error(`✘ [ERROR] ${text}`); // eslint-disable-line
+				console.error(`    ${location.file}:${location.line}:${location.column}:`); // eslint-disable-line
 			});
-			console.log('[watch] build finished');
+			console.log('[watch] build finished'); // eslint-disable-line
 		});
 	},
 };
@@ -51,6 +51,6 @@ async function main() {
 }
 
 main().catch(e => {
-	console.error(e);
-	process.exit(1);
+	console.error(e); // eslint-disable-line
+	process.exit(1); // eslint-disable-line
 });
