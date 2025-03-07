@@ -3,8 +3,8 @@ import { COMPOSER_FILE, WORKSPACE_ROOT } from './utils/constants';
 import { autoImportNamespace } from './feature/autoImport';
 import { ConfigKeys } from './infrastructure/workspace/configTypes';
 import { isConfigEnabled } from './infrastructure/workspace/vscodeConfig';
-import { removeUnusedImports } from './feature/removeUnusedImports';
-import { updateNamespaceFiles } from './feature/generate/updateFiles';
+import { removeUnusedImports } from './application/namespace/remove/removeUnusedImports';
+import { updateReferences } from './application/namespace/update/updateReferences';
 import { workspace } from 'vscode';
 
 const PHP = '.php';
@@ -24,7 +24,7 @@ export function activate() {
         return;
       }
 
-      await updateNamespaceFiles({ newUri, oldUri });
+      await updateReferences({ newUri, oldUri });
 
       if (isConfigEnabled({ key: ConfigKeys.AUTO_IMPORT_NAMESPACE })) {
         await autoImportNamespace({

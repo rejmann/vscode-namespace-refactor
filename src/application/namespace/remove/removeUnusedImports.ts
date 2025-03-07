@@ -1,9 +1,9 @@
-import { extractClassNameFromPath, extractDirectoryFromPath } from '../utils/filePathUtils';
+import { extractClassNameFromPath, extractDirectoryFromPath } from '../../../utils/filePathUtils';
 import { RelativePattern, Uri, workspace } from 'vscode';
-import { ConfigKeys } from './../infrastructure/workspace/configTypes';
-import { generateNamespace } from '../domain/namespace/generateNamespace';
-import { isConfigEnabled } from '../infrastructure/workspace/vscodeConfig';
-import { removeImports } from './removeUnusedImports/removeImports';
+import { ConfigKeys } from '../../../infrastructure/workspace/configTypes';
+import { generateNamespace } from '../../../domain/namespace/generateNamespace';
+import { isConfigEnabled } from '../../../infrastructure/workspace/vscodeConfig';
+import { removeImports } from './removeImports';
 
 interface Props {
   uri: Uri
@@ -20,9 +20,8 @@ export async function removeUnusedImports({ uri }: Props) {
 
   const directoryPath = extractDirectoryFromPath(uri.fsPath);
 
-  const phpFiles: Uri[] = await workspace.findFiles(
-    new RelativePattern(Uri.parse(`file://${directoryPath}`), '*.php')
-  );
+  const pattern = new RelativePattern(Uri.parse(`file://${directoryPath}`), '*.php');
+  const phpFiles: Uri[] = await workspace.findFiles(pattern);
 
   const fileNames: string[] = phpFiles.map(uri => extractClassNameFromPath(uri.fsPath))
     .filter(Boolean)
