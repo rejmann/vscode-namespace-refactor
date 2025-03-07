@@ -1,13 +1,11 @@
 import * as fs from 'fs';
-import { COMPOSER_FILE, WORKSPACE_ROOT } from './infra/utils/constants';
+import { COMPOSER_FILE, PHP_EXTENSION, WORKSPACE_ROOT } from './infra/utils/constants';
 import { ConfigKeys } from './infra/workspace/configTypes';
 import { importMissingClasses } from './app/namespace/update/import/importMissingClasses';
 import { isConfigEnabled } from './infra/workspace/vscodeConfig';
 import { removeUnusedImports } from './app/namespace/remove/removeUnusedImports';
 import { updateReferences } from './app/namespace/update/updateReferences';
 import { workspace } from 'vscode';
-
-const PHP = '.php';
 
 export function activate() {
   const files: string[] = fs.readdirSync(WORKSPACE_ROOT);
@@ -20,7 +18,7 @@ export function activate() {
       const oldUri = file.oldUri;
       const newUri = file.newUri;
 
-      if (!oldUri.fsPath.endsWith(PHP) || !newUri.fsPath.endsWith(PHP)) {
+      if (!oldUri.fsPath.endsWith(PHP_EXTENSION) || !newUri.fsPath.endsWith(PHP_EXTENSION)) {
         return;
       }
 
