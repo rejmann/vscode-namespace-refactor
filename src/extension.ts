@@ -1,12 +1,11 @@
 import * as fs from 'fs';
-import { COMPOSER_FILE, WORKSPACE_ROOT } from './feature/constants';
-import { CONFIG_AUTO_IMPORT_NAMESPACE, CONFIG_REMOVE_UNUSED_IMPORTS, isFeatureEnabled } from './configUtils';
-import { autoImportNamespace } from './feature/autoImport';
-import { removeUnusedImports } from './feature/removeUnusedImports';
-import { updateNamespaceFiles } from './feature/generate/updateFiles';
+import { COMPOSER_FILE, PHP_EXTENSION, WORKSPACE_ROOT } from './infra/utils/constants';
+import { ConfigKeys } from './infra/workspace/configTypes';
+import { importMissingClasses } from './app/namespace/update/import/importMissingClasses';
+import { isConfigEnabled } from './infra/workspace/vscodeConfig';
+import { removeUnusedImports } from './app/namespace/remove/removeUnusedImports';
+import { updateReferences } from './app/namespace/update/updateReferences';
 import { workspace } from 'vscode';
-
-const PHP = '.php';
 
 export function activate() {
   const files: string[] = fs.readdirSync(WORKSPACE_ROOT);
@@ -19,14 +18,14 @@ export function activate() {
       const oldUri = file.oldUri;
       const newUri = file.newUri;
 
-      if (!oldUri.fsPath.endsWith(PHP) || !newUri.fsPath.endsWith(PHP)) {
+      if (!oldUri.fsPath.endsWith(PHP_EXTENSION) || !newUri.fsPath.endsWith(PHP_EXTENSION)) {
         return;
       }
 
-      await updateNamespaceFiles({ newUri, oldUri });
+      await updateReferences({ newUri, oldUri });
 
-      if (isFeatureEnabled({ key: CONFIG_AUTO_IMPORT_NAMESPACE })) {
-        await autoImportNamespace({
+      if (isConfigEnabled({ key: ConfigKeys.AUTO_IMPORT_NAMESPACE })) {
+        await importMissingClasses({
           oldFileName: oldUri.fsPath,
           newUri,
         });

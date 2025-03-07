@@ -8,5 +8,11 @@
     "sourceMap": true,
     "rootDir": "src",
     "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["./src/app/*"],
+      "@domain/*": ["./src/domain/*"],
+      "@infra/*": ["./src/infra/*"],
+    }
   }
 }

@@ -3,7 +3,7 @@ interface Props {
   classes: string[],
 }
 
-export function getClassesUsed({
+export function findUnimportedClasses({
   text,
   classes,
 }: Props): string[] {
