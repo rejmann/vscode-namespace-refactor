@@ -1,10 +1,10 @@
 import * as fs from 'fs';
-import { COMPOSER_FILE, WORKSPACE_ROOT } from './infrastructure/utils/constants';
-import { ConfigKeys } from './infrastructure/workspace/configTypes';
-import { importMissingClasses } from './application/namespace/update/import/importMissingClasses';
-import { isConfigEnabled } from './infrastructure/workspace/vscodeConfig';
-import { removeUnusedImports } from './application/namespace/remove/removeUnusedImports';
-import { updateReferences } from './application/namespace/update/updateReferences';
+import { COMPOSER_FILE, WORKSPACE_ROOT } from './infra/utils/constants';
+import { ConfigKeys } from './infra/workspace/configTypes';
+import { importMissingClasses } from './app/namespace/update/import/importMissingClasses';
+import { isConfigEnabled } from './infra/workspace/vscodeConfig';
+import { removeUnusedImports } from './app/namespace/remove/removeUnusedImports';
+import { updateReferences } from './app/namespace/update/updateReferences';
 import { workspace } from 'vscode';
 
 const PHP = '.php';

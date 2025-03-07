@@ -1,5 +1,5 @@
 import { Range, Uri, workspace, WorkspaceEdit } from 'vscode';
-import { extractDirectoryFromPath } from '../../../../infrastructure/utils/filePathUtils';
+import { extractDirectoryFromPath } from '../../../../infra/utils/filePathUtils';
 import { findUnimportedClasses } from './findUnimportedClasses';
 import { generateUseStatementsForClasses } from '../../../../domain/namespace/generateUseStatementsForClasses';
 import { getClassesNamesInDirectory } from './getClassesNamesInDirectory';

@@ -1,5 +1,5 @@
 import { Range, Uri, workspace, WorkspaceEdit } from 'vscode';
-import { extractDirectoryFromPath } from '../../../infrastructure/utils/filePathUtils';
+import { extractDirectoryFromPath } from '../../../infra/utils/filePathUtils';
 
 interface Props {
   file: Uri

@@ -1,4 +1,4 @@
-import { COMPOSER_FILE } from '../../infrastructure/utils/constants';
+import { COMPOSER_FILE } from '../../infra/utils/constants';
 import { readFileSync } from 'fs';
 
 interface Props {

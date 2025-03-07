@@ -1,7 +1,7 @@
 import { fetchComposerAutoload } from './fetchComposerAutoload';
-import { removeWorkspaceRoot } from '../../infrastructure/utils/filePathUtils';
+import { removeWorkspaceRoot } from '../../infra/utils/filePathUtils';
 import { resolvePathFromPrefix } from './resolvePathFromPrefix';
-import { WORKSPACE_ROOT } from '../../infrastructure/utils/constants';
+import { WORKSPACE_ROOT } from '../../infra/utils/constants';
 
 interface Props {
   uri: string
