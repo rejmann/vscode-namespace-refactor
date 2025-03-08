@@ -103,7 +103,6 @@
     "test": "vscode-test",
     "release": "standard-version",
     "pack": "vsce package",
-    "release:pack": "npm run release && npm run pack",
     "publish": "vsce package && vsce publish",
     "publish:pre-release": "vsce package --pre-release && vsce publish --pre-release"
   },
