@@ -9,6 +9,9 @@ interface Props {
 
 const NAMESPACE_DIVIDER = '\\":';
 
+const REGEX_FORWARD_SLASH_PATTERN = /\//g;
+const REGEX_FINAL_BACKSLASH_SEGMENT = /\\[^\\]+$/;
+
 export function resolvePathFromPrefix({
   autoload,
   workspaceRoot,
@@ -26,8 +29,8 @@ export function resolvePathFromPrefix({
 
     return workspaceRoot
       .replace(src, srcReplace)
-      .replace(/\//g, '\\')
-      .replace(/\\[^\\]+$/, '');
+      .replace(REGEX_FORWARD_SLASH_PATTERN, '\\')
+      .replace(REGEX_FINAL_BACKSLASH_SEGMENT, '');
   }
 
   return '';
