@@ -7,6 +7,8 @@ interface Props {
   workspaceRoot: string,
 }
 
+const NAMESPACE_DIVIDER = '\\":';
+
 export function resolvePathFromPrefix({
   autoload,
   workspaceRoot,
@@ -18,10 +20,12 @@ export function resolvePathFromPrefix({
       continue;
     }
 
-    const prefixoBase = prefix.split('\\')[0];
+    const prefixBase = prefix.split(NAMESPACE_DIVIDER).at(0)?.replace(/\\+$/, '') || '';
+
+    const srcReplace = src.endsWith('/') ? prefixBase + '\\' : prefixBase;
 
     return workspaceRoot
-      .replace(src, (src.endsWith('/') ? prefixoBase + '\\' : prefixoBase))
+      .replace(src, srcReplace)
       .replace(/\//g, '\\')
       .replace(/\\[^\\]+$/, '');
   }
